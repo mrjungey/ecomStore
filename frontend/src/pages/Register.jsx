@@ -1,29 +1,29 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import toast from "react-hot-toast";
+import { useState } from "react" 
+import { Link, useNavigate } from "react-router-dom" 
+import { useAuth } from "../context/AuthContext" 
+import toast from "react-hot-toast" 
 
 export default function Register() {
-  const [form, setForm] = useState({ name: "", email: "", password: "", phone: "", address: "" });
-  const [submitting, setSubmitting] = useState(false);
-  const { register } = useAuth();
-  const navigate = useNavigate();
+  const [form, setForm] = useState({ name: "", email: "", password: "", phone: "", address: "" }) 
+  const [submitting, setSubmitting] = useState(false) 
+  const { register } = useAuth() 
+  const navigate = useNavigate() 
 
   function update(field, value) {
-    setForm((prev) => ({ ...prev, [field]: value }));
+    setForm((prev) => ({ ...prev, [field]: value })) 
   }
 
   async function handleSubmit(e) {
-    e.preventDefault();
-    setSubmitting(true);
+    e.preventDefault() 
+    setSubmitting(true) 
     try {
-      await register(form);
-      toast.success("Account created");
-      navigate("/");
+      await register(form) 
+      toast.success("Account created") 
+      navigate("/") 
     } catch (err) {
-      toast.error(err.response?.data?.message || "Registration failed");
+      toast.error(err.response?.data?.message || "Registration failed") 
     } finally {
-      setSubmitting(false);
+      setSubmitting(false) 
     }
   }
 
@@ -44,5 +44,5 @@ export default function Register() {
         Already have an account? <Link to="/login" className="underline">Login</Link>
       </p>
     </div>
-  );
+  ) 
 }

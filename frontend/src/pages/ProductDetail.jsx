@@ -1,55 +1,55 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { ShoppingCart, Heart, MessageSquare, Star } from "lucide-react";
-import api from "../services/api";
-import { useCart } from "../context/CartContext";
-import { useAuth } from "../context/AuthContext";
-import toast from "react-hot-toast";
+import { useEffect, useState } from "react" 
+import { useParams, useNavigate } from "react-router-dom" 
+import { ShoppingCart, Heart, MessageSquare, Star } from "lucide-react" 
+import api from "../services/api" 
+import { useCart } from "../context/CartContext" 
+import { useAuth } from "../context/AuthContext" 
+import toast from "react-hot-toast" 
 
 export default function ProductDetail() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const { addToCart } = useCart();
-  const { user } = useAuth();
-  const [product, setProduct] = useState(null);
-  const [reviews, setReviews] = useState([]);
-  const [reviewForm, setReviewForm] = useState({ rating: 5, comment: "" });
-  const [selectedImage, setSelectedImage] = useState(0);
+  const { id } = useParams() 
+  const navigate = useNavigate() 
+  const { addToCart } = useCart() 
+  const { user } = useAuth() 
+  const [product, setProduct] = useState(null) 
+  const [reviews, setReviews] = useState([]) 
+  const [reviewForm, setReviewForm] = useState({ rating: 5, comment: "" }) 
+  const [selectedImage, setSelectedImage] = useState(0) 
 
   useEffect(() => {
-    api.get("/products/" + id).then((res) => setProduct(res.data.product)).catch(() => navigate("/products"));
-    api.get("/reviews/product/" + id).then((res) => setReviews(res.data.reviews)).catch(() => {});
-  }, [id]);
+    api.get("/products/" + id).then((res) => setProduct(res.data.product)).catch(() => navigate("/products")) 
+    api.get("/reviews/product/" + id).then((res) => setReviews(res.data.reviews)).catch(() => {}) 
+  }, [id]) 
 
   async function handleAddReview(e) {
-    e.preventDefault();
+    e.preventDefault() 
     try {
-      await api.post("/reviews", { product: id, ...reviewForm });
-      toast.success("Review added");
-      const res = await api.get("/reviews/product/" + id);
-      setReviews(res.data.reviews);
-      setReviewForm({ rating: 5, comment: "" });
+      await api.post("/reviews", { product: id, ...reviewForm }) 
+      toast.success("Review added") 
+      const res = await api.get("/reviews/product/" + id) 
+      setReviews(res.data.reviews) 
+      setReviewForm({ rating: 5, comment: "" }) 
     } catch (err) {
-      toast.error(err.response?.data?.message || "Failed");
+      toast.error(err.response?.data?.message || "Failed") 
     }
   }
 
   async function handleChatWithSeller() {
-    if (!user) return navigate("/login");
+    if (!user) return navigate("/login") 
     try {
       const res = await api.post("/chat/start", {
         sellerId: product.seller._id,
         productId: product._id,
-      });
-      navigate("/chat/" + res.data.chat._id);
+      }) 
+      navigate("/chat/" + res.data.chat._id) 
     } catch {
-      toast.error("Could not start chat");
+      toast.error("Could not start chat") 
     }
   }
 
-  if (!product) return <p className="text-sm text-gray-400">Loading...</p>;
+  if (!product) return <p className="text-sm text-gray-400">Loading...</p> 
 
-  const images = product.images?.length > 0 ? product.images : [{ url: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect width='48' height='48' fill='%23e5e7eb'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%239ca3af' font-size='8'%3ENo img%3C/text%3E%3C/svg%3E" }];
+  const images = product.images?.length > 0 ? product.images : [{ url: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect width='48' height='48' fill='%23e5e7eb'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%239ca3af' font-size='8'%3ENo img%3C/text%3E%3C/svg%3E" }] 
 
   return (
     <div>
@@ -102,15 +102,15 @@ export default function ProductDetail() {
           {user && user.role === "customer" && product.stock > 0 && (
             <div className="flex gap-2">
               <button
-                onClick={() => { addToCart(product); toast.success("Added to cart"); }}
+                onClick={() => { addToCart(product)  toast.success("Added to cart")  }}
                 className="flex items-center gap-2 bg-gray-900 text-white px-4 py-2 rounded text-sm hover:bg-gray-800"
               >
                 <ShoppingCart size={16} /> Add to Cart
               </button>
               <button
                 onClick={async () => {
-                  try { await api.post("/wishlist", { product: product._id }); toast.success("Added to wishlist"); }
-                  catch (err) { toast.error(err.response?.data?.message || "Failed"); }
+                  try { await api.post("/wishlist", { product: product._id })  toast.success("Added to wishlist")  }
+                  catch (err) { toast.error(err.response?.data?.message || "Failed")  }
                 }}
                 className="flex items-center gap-2 border px-4 py-2 rounded text-sm hover:bg-gray-50"
               >
@@ -179,5 +179,5 @@ export default function ProductDetail() {
         )}
       </div>
     </div>
-  );
+  ) 
 }

@@ -1,52 +1,52 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import api from "../services/api";
-import { useAuth } from "../context/AuthContext";
-import OrderStatusBadge from "../components/OrderStatusBadge";
-import OrderStatusTracker from "../components/OrderStatusTracker";
-import toast from "react-hot-toast";
+import { useEffect, useState } from "react" 
+import { useParams } from "react-router-dom" 
+import api from "../services/api" 
+import { useAuth } from "../context/AuthContext" 
+import OrderStatusBadge from "../components/OrderStatusBadge" 
+import OrderStatusTracker from "../components/OrderStatusTracker" 
+import toast from "react-hot-toast" 
 
 export default function OrderDetail() {
-  const { id } = useParams();
-  const { user } = useAuth();
-  const [order, setOrder] = useState(null);
+  const { id } = useParams() 
+  const { user } = useAuth() 
+  const [order, setOrder] = useState(null) 
 
   useEffect(() => {
-    api.get("/orders/" + id).then((res) => setOrder(res.data.order)).catch(() => {});
-  }, [id]);
+    api.get("/orders/" + id).then((res) => setOrder(res.data.order)).catch(() => {}) 
+  }, [id]) 
 
   async function handleCancel() {
-    if (!confirm("Cancel this order?")) return;
+    if (!confirm("Cancel this order?")) return 
     try {
-      const res = await api.put("/orders/" + id + "/cancel");
-      setOrder(res.data.order);
-      toast.success("Order cancelled");
+      const res = await api.put("/orders/" + id + "/cancel") 
+      setOrder(res.data.order) 
+      toast.success("Order cancelled") 
     } catch (err) {
-      toast.error(err.response?.data?.message || "Failed");
+      toast.error(err.response?.data?.message || "Failed") 
     }
   }
 
   async function handleUpdateStatus(newStatus) {
     try {
-      const res = await api.put("/orders/" + id + "/status", { status: newStatus });
-      setOrder(res.data.order);
-      toast.success("Status updated to " + newStatus);
+      const res = await api.put("/orders/" + id + "/status", { status: newStatus }) 
+      setOrder(res.data.order) 
+      toast.success("Status updated to " + newStatus) 
     } catch (err) {
-      toast.error(err.response?.data?.message || "Failed");
+      toast.error(err.response?.data?.message || "Failed") 
     }
   }
 
-  if (!order) return <p className="text-sm text-gray-400">Loading...</p>;
+  if (!order) return <p className="text-sm text-gray-400">Loading...</p> 
 
   const statusFlow = {
     pending: ["confirmed", "cancelled"],
     confirmed: ["processing", "cancelled"],
     processing: ["shipped", "cancelled"],
     shipped: ["delivered"],
-  };
+  } 
 
-  const allowedNext = statusFlow[order.status] || [];
-  const canManage = user?.role === "admin" || user?.role === "seller";
+  const allowedNext = statusFlow[order.status] || [] 
+  const canManage = user?.role === "admin" || user?.role === "seller" 
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -105,5 +105,5 @@ export default function OrderDetail() {
         ))}
       </div>
     </div>
-  );
+  ) 
 }

@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import api from "../../services/api";
-import { useAuth } from "../../context/AuthContext";
-import { Pencil, Trash2, Plus } from "lucide-react";
-import toast from "react-hot-toast";
+import { useEffect, useState } from "react" 
+import api from "../../services/api" 
+import { useAuth } from "../../context/AuthContext" 
+import { Pencil, Trash2, Plus } from "lucide-react" 
+import toast from "react-hot-toast" 
 
 export default function SellerProducts() {
-  const { user } = useAuth();
+  const { user } = useAuth() 
 
-  const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [showForm, setShowForm] = useState(false);
-  const [editing, setEditing] = useState(null);
+  const [products, setProducts] = useState([]) 
+  const [categories, setCategories] = useState([]) 
+  const [showForm, setShowForm] = useState(false) 
+  const [editing, setEditing] = useState(null) 
 
   const [form, setForm] = useState({
     name: "",
@@ -18,46 +18,46 @@ export default function SellerProducts() {
     price: "",
     stock: "",
     category: "",
-  });
+  }) 
 
-  const [files, setFiles] = useState([]);
-  const [submitting, setSubmitting] = useState(false);
+  const [files, setFiles] = useState([]) 
+  const [submitting, setSubmitting] = useState(false) 
 
   useEffect(() => {
-    fetchProducts();
+    fetchProducts() 
 
     api
       .get("/categories")
       .then((res) => setCategories(res.data.categories))
-      .catch(() => {});
-  }, []);
+      .catch(() => {}) 
+  }, []) 
 
   function fetchProducts() {
-    if (!user?.id) return;
+    if (!user?.id) return 
 
     api
       .get(`/products?seller=${user._id}&limit=100`)
       .then((res) => setProducts(res.data.products))
       .catch((err) => {
-        console.error("FETCH ERROR:", err);
-      });
+        console.error("FETCH ERROR:", err) 
+      }) 
   }
 
   function openCreate() {
-    setEditing(null);
+    setEditing(null) 
     setForm({
       name: "",
       description: "",
       price: "",
       stock: "",
       category: "",
-    });
-    setFiles([]);
-    setShowForm(true);
+    }) 
+    setFiles([]) 
+    setShowForm(true) 
   }
 
   function openEdit(product) {
-    setEditing(product._id);
+    setEditing(product._id) 
 
     setForm({
       name: product.name || "",
@@ -65,71 +65,71 @@ export default function SellerProducts() {
       price: product.price?.toString() || "",
       stock: product.stock?.toString() || "",
       category: product.category?._id || "",
-    });
+    }) 
 
-    setFiles([]);
-    setShowForm(true);
+    setFiles([]) 
+    setShowForm(true) 
   }
 
   async function handleSubmit(e) {
-    e.preventDefault();
+    e.preventDefault() 
 
     if (!form.name || !form.price || !form.stock || !form.category) {
-      return toast.error("Please fill all required fields");
+      return toast.error("Please fill all required fields") 
     }
 
-    setSubmitting(true);
+    setSubmitting(true) 
 
     try {
-      const formData = new FormData();
+      const formData = new FormData() 
 
-      formData.append("name", form.name);
-      formData.append("description", form.description);
-      formData.append("price", form.price);
-      formData.append("stock", form.stock);
-      formData.append("category", form.category);
+      formData.append("name", form.name) 
+      formData.append("description", form.description) 
+      formData.append("price", form.price) 
+      formData.append("stock", form.stock) 
+      formData.append("category", form.category) 
 
       // ✅ append images safely
       if (files && files.length > 0) {
-        for (let i = 0; i < files.length; i++) {
-          formData.append("images", files[i]);
+        for (let i = 0  i < files.length  i++) {
+          formData.append("images", files[i]) 
         }
       }
 
       if (editing) {
         await api.put(`/products/${editing}`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
-        });
+        }) 
 
-        toast.success("Product updated");
+        toast.success("Product updated") 
       } else {
         await api.post("/products", formData, {
           headers: { "Content-Type": "multipart/form-data" },
-        });
+        }) 
 
-        toast.success("Product created");
+        toast.success("Product created") 
       }
 
-      setShowForm(false);
-      fetchProducts();
+      setShowForm(false) 
+      fetchProducts() 
     } catch (err) {
-      console.error("CREATE/UPDATE ERROR:", err);
-      toast.error(err.response?.data?.message || "Something went wrong");
+      console.error("CREATE/UPDATE ERROR:", err) 
+      toast.error(err.response?.data?.message || "Something went wrong") 
     } finally {
-      setSubmitting(false);
+      setSubmitting(false) 
     }
   }
 
   async function handleDelete(id) {
-    if (!confirm("Delete this product?")) return;
+    if (!confirm("Delete this product?")) return 
 
     try {
-      await api.delete(`/products/${id}`);
-      toast.success("Deleted");
-      fetchProducts();
+      await api.delete(`/products/${id}`) 
+      toast.success("Deleted") 
+      fetchProducts() 
     } catch (err) {
-      console.error("DELETE ERROR:", err);
-      toast.error("Failed to delete");
+      console.error("DELETE ERROR:", err) 
+      toast.error("Failed to delete") 
     }
   }
 
@@ -294,5 +294,5 @@ export default function SellerProducts() {
         </div>
       )}
     </div>
-  );
+  ) 
 }

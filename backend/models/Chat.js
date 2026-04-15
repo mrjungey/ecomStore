@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose") 
 
 const chatSchema = new mongoose.Schema(
   {
@@ -8,6 +8,6 @@ const chatSchema = new mongoose.Schema(
     lastMessageAt: { type: Date, default: Date.now },
   },
   { timestamps: true }
-);
+) 
 
-module.exports = mongoose.model("Chat", chatSchema);
+module.exports = mongoose.model("Chat", chatSchema) 

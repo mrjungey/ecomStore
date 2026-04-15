@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
-import api from "../services/api";
-import ProductCard from "../components/ProductCard";
+import { useEffect, useState } from "react" 
+import api from "../services/api" 
+import ProductCard from "../components/ProductCard" 
 
 export default function Home() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState([]) 
+  const [loading, setLoading] = useState(true) 
 
   useEffect(() => {
     api.get("/products?limit=8&sort=rating")
       .then((res) => setProducts(res.data.products))
       .catch(() => {})
-      .finally(() => setLoading(false));
-  }, []);
+      .finally(() => setLoading(false)) 
+  }, []) 
 
   return (
     <div>
@@ -32,5 +32,5 @@ export default function Home() {
         </div>
       )}
     </div>
-  );
+  ) 
 }

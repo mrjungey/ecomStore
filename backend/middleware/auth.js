@@ -1,30 +1,30 @@
-const jwt = require("jsonwebtoken");
-const User = require("../models/User");
+const jwt = require("jsonwebtoken") 
+const User = require("../models/User") 
 
 async function authenticate(req, res, next) {
-  const header = req.headers.authorization;
+  const header = req.headers.authorization 
   if (!header || !header.startsWith("Bearer ")) {
-    return res.status(401).json({ message: "No token provided" });
+    return res.status(401).json({ message: "No token provided" }) 
   }
 
   try {
-    const decoded = jwt.verify(header.split(" ")[1], process.env.JWT_SECRET);
-    const user = await User.findById(decoded.id).select("-password");
-    if (!user) return res.status(401).json({ message: "User not found" });
-    req.user = user;
-    next();
+    const decoded = jwt.verify(header.split(" ")[1], process.env.JWT_SECRET) 
+    const user = await User.findById(decoded.id).select("-password") 
+    if (!user) return res.status(401).json({ message: "User not found" }) 
+    req.user = user 
+    next() 
   } catch (err) {
-    return res.status(401).json({ message: "Invalid token" });
+    return res.status(401).json({ message: "Invalid token" }) 
   }
 }
 
 function authorize(...roles) {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      return res.status(403).json({ message: "Access denied" });
+      return res.status(403).json({ message: "Access denied" }) 
     }
-    next();
-  };
+    next() 
+  } 
 }
 
-module.exports = { authenticate, authorize };
+module.exports = { authenticate, authorize } 

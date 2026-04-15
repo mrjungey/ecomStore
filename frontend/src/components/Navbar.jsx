@@ -1,18 +1,18 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import { useCart } from "../context/CartContext";
-import { ShoppingCart, User, LogOut, MessageSquare, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom" 
+import { useAuth } from "../context/AuthContext" 
+import { useCart } from "../context/CartContext" 
+import { ShoppingCart, User, LogOut, MessageSquare, Menu, X } from "lucide-react" 
+import { useState } from "react" 
 
 export default function Navbar() {
-  const { user, logout } = useAuth();
-  const { totalItems } = useCart();
-  const navigate = useNavigate();
-  const [menuOpen, setMenuOpen] = useState(false);
+  const { user, logout } = useAuth() 
+  const { totalItems } = useCart() 
+  const navigate = useNavigate() 
+  const [menuOpen, setMenuOpen] = useState(false) 
 
   function handleLogout() {
-    logout();
-    navigate("/login");
+    logout() 
+    navigate("/login") 
   }
 
   return (
@@ -121,5 +121,5 @@ export default function Navbar() {
         </div>
       )}
     </nav>
-  );
+  ) 
 }

@@ -1,30 +1,30 @@
-import { Routes, Route } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
-import Navbar from "./components/Navbar";
-import ProtectedRoute from "./components/ProtectedRoute";
+import { Routes, Route } from "react-router-dom" 
+import { Toaster } from "react-hot-toast" 
+import Navbar from "./components/Navbar" 
+import ProtectedRoute from "./components/ProtectedRoute" 
 
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Profile from "./pages/Profile";
-import ProductList from "./pages/ProductList";
-import ProductDetail from "./pages/ProductDetail";
-import Cart from "./pages/Cart";
-import Checkout from "./pages/Checkout";
-import OrderHistory from "./pages/OrderHistory";
-import OrderDetail from "./pages/OrderDetail";
-import Wishlist from "./pages/Wishlist";
-import ChatPage from "./pages/ChatPage";
-import ChatWindow from "./pages/ChatWindow";
+import Home from "./pages/Home" 
+import Login from "./pages/Login" 
+import Register from "./pages/Register" 
+import Profile from "./pages/Profile" 
+import ProductList from "./pages/ProductList" 
+import ProductDetail from "./pages/ProductDetail" 
+import Cart from "./pages/Cart" 
+import Checkout from "./pages/Checkout" 
+import OrderHistory from "./pages/OrderHistory" 
+import OrderDetail from "./pages/OrderDetail" 
+import Wishlist from "./pages/Wishlist" 
+import ChatPage from "./pages/ChatPage" 
+import ChatWindow from "./pages/ChatWindow" 
 
-import SellerProducts from "./pages/seller/SellerProducts";
-import SellerOrders from "./pages/seller/SellerOrders";
+import SellerProducts from "./pages/seller/SellerProducts" 
+import SellerOrders from "./pages/seller/SellerOrders" 
 
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import AdminSellers from "./pages/admin/AdminSellers";
-import AdminProducts from "./pages/admin/AdminProducts";
-import AdminOrders from "./pages/admin/AdminOrders";
-import AdminUsers from "./pages/admin/AdminUsers";
+import AdminDashboard from "./pages/admin/AdminDashboard" 
+import AdminSellers from "./pages/admin/AdminSellers" 
+import AdminProducts from "./pages/admin/AdminProducts" 
+import AdminOrders from "./pages/admin/AdminOrders" 
+import AdminUsers from "./pages/admin/AdminUsers" 
 
 export default function App() {
   return (
@@ -59,5 +59,5 @@ export default function App() {
         </Routes>
       </main>
     </>
-  );
+  ) 
 }

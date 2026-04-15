@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
-import { useCart } from "../context/CartContext";
-import { Trash2, Plus, Minus } from "lucide-react";
+import { Link } from "react-router-dom" 
+import { useCart } from "../context/CartContext" 
+import { Trash2, Plus, Minus } from "lucide-react" 
 
 export default function Cart() {
-  const { items, removeFromCart, updateQuantity, totalPrice } = useCart();
+  const { items, removeFromCart, updateQuantity, totalPrice } = useCart() 
 
   if (items.length === 0) {
     return (
@@ -11,7 +11,7 @@ export default function Cart() {
         <p className="text-gray-500 mb-3">Your cart is empty</p>
         <Link to="/products" className="text-sm underline">Browse products</Link>
       </div>
-    );
+    ) 
   }
 
   return (
@@ -54,5 +54,5 @@ export default function Cart() {
         </Link>
       </div>
     </div>
-  );
+  ) 
 }
