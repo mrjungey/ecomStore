@@ -6,7 +6,7 @@ const { Server } = require("socket.io");
 require("dotenv").config();
 
 const authRoutes = require("./routes/auth");
-const productRoutes = require("./routes/products.js");
+const productRoutes = require("./routes/products");
 const categoryRoutes = require("./routes/categories");
 const orderRoutes = require("./routes/orders");
 const reviewRoutes = require("./routes/reviews");
