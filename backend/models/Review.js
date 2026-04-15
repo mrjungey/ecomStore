@@ -1,4 +1,4 @@
-const mongoose = require("mongoose") 
+const mongoose = require("mongoose");
 
 const reviewSchema = new mongoose.Schema(
   {
@@ -8,8 +8,8 @@ const reviewSchema = new mongoose.Schema(
     comment: { type: String, default: "" },
   },
   { timestamps: true }
-) 
+);
 
-reviewSchema.index({ product: 1, user: 1 }, { unique: true }) 
+reviewSchema.index({ product: 1, user: 1 }, { unique: true });
 
-module.exports = mongoose.model("Review", reviewSchema) 
+module.exports = mongoose.model("Review", reviewSchema);

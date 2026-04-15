@@ -1,22 +1,22 @@
-import { useState } from "react" 
-import api from "../../services/api" 
-import toast from "react-hot-toast" 
+import { useState } from "react";
+import api from "../../services/api";
+import toast from "react-hot-toast";
 
 export default function AdminSellers() {
-  const [form, setForm] = useState({ name: "", email: "", password: "", phone: "" }) 
-  const [submitting, setSubmitting] = useState(false) 
+  const [form, setForm] = useState({ name: "", email: "", password: "", phone: "" });
+  const [submitting, setSubmitting] = useState(false);
 
   async function handleSubmit(e) {
-    e.preventDefault() 
-    setSubmitting(true) 
+    e.preventDefault();
+    setSubmitting(true);
     try {
-      await api.post("/admin/sellers", form) 
-      toast.success("Seller created") 
-      setForm({ name: "", email: "", password: "", phone: "" }) 
+      await api.post("/admin/sellers", form);
+      toast.success("Seller created");
+      setForm({ name: "", email: "", password: "", phone: "" });
     } catch (err) {
-      toast.error(err.response?.data?.message || "Failed") 
+      toast.error(err.response?.data?.message || "Failed");
     } finally {
-      setSubmitting(false) 
+      setSubmitting(false);
     }
   }
 
@@ -33,5 +33,5 @@ export default function AdminSellers() {
         </button>
       </form>
     </div>
-  ) 
+  );
 }

@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react" 
-import { Link } from "react-router-dom" 
-import api from "../../services/api" 
-import OrderStatusBadge from "../../components/OrderStatusBadge" 
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import api from "../../services/api";
+import OrderStatusBadge from "../../components/OrderStatusBadge";
 
 export default function SellerOrders() {
-  const [orders, setOrders] = useState([]) 
-  const [loading, setLoading] = useState(true) 
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get("/orders/seller/list").then((res) => setOrders(res.data.orders)).catch(() => {}).finally(() => setLoading(false)) 
-  }, []) 
+    api.get("/orders/seller/list").then((res) => setOrders(res.data.orders)).catch(() => {}).finally(() => setLoading(false));
+  }, []);
 
-  if (loading) return <p className="text-sm text-gray-400">Loading...</p> 
+  if (loading) return <p className="text-sm text-gray-400">Loading...</p>;
 
   return (
     <div>
@@ -36,5 +36,5 @@ export default function SellerOrders() {
         </div>
       )}
     </div>
-  ) 
+  );
 }

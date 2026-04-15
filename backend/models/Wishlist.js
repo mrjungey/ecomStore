@@ -1,4 +1,4 @@
-const mongoose = require("mongoose") 
+const mongoose = require("mongoose");
 
 const wishlistSchema = new mongoose.Schema(
   {
@@ -6,8 +6,8 @@ const wishlistSchema = new mongoose.Schema(
     product: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
   },
   { timestamps: true }
-) 
+);
 
-wishlistSchema.index({ user: 1, product: 1 }, { unique: true }) 
+wishlistSchema.index({ user: 1, product: 1 }, { unique: true });
 
-module.exports = mongoose.model("Wishlist", wishlistSchema) 
+module.exports = mongoose.model("Wishlist", wishlistSchema);

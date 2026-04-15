@@ -1,19 +1,19 @@
-import { useEffect, useState } from "react" 
-import { Link } from "react-router-dom" 
-import api from "../services/api" 
-import { useAuth } from "../context/AuthContext" 
-import { MessageSquare } from "lucide-react" 
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import api from "../services/api";
+import { useAuth } from "../context/AuthContext";
+import { MessageSquare } from "lucide-react";
 
 export default function ChatPage() {
-  const { user } = useAuth() 
-  const [chats, setChats] = useState([]) 
-  const [loading, setLoading] = useState(true) 
+  const { user } = useAuth();
+  const [chats, setChats] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get("/chat").then((res) => setChats(res.data.chats)).catch(() => {}).finally(() => setLoading(false)) 
-  }, []) 
+    api.get("/chat").then((res) => setChats(res.data.chats)).catch(() => {}).finally(() => setLoading(false));
+  }, []);
 
-  if (loading) return <p className="text-sm text-gray-400">Loading...</p> 
+  if (loading) return <p className="text-sm text-gray-400">Loading...</p>;
 
   return (
     <div className="max-w-xl mx-auto">
@@ -27,7 +27,7 @@ export default function ChatPage() {
       ) : (
         <div className="space-y-1">
           {chats.map((chat) => {
-            const other = chat.participants.find((p) => p._id !== user.id) 
+            const other = chat.participants.find((p) => p._id !== user.id);
             return (
               <Link
                 key={chat._id}
@@ -52,10 +52,10 @@ export default function ChatPage() {
                   )}
                 </div>
               </Link>
-            ) 
+            );
           })}
         </div>
       )}
     </div>
-  ) 
+  );
 }

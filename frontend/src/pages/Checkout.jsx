@@ -1,35 +1,35 @@
-import { useState } from "react" 
-import { useNavigate } from "react-router-dom" 
-import { useCart } from "../context/CartContext" 
-import api from "../services/api" 
-import toast from "react-hot-toast" 
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
+import api from "../services/api";
+import toast from "react-hot-toast";
 
 export default function Checkout() {
-  const { items, clearCart } = useCart() 
-  const navigate = useNavigate() 
+  const { items, clearCart } = useCart();
+  const navigate = useNavigate();
 
   const [address, setAddress] = useState({
     fullName: "",
     phone: "",
     address: "",
     city: "",
-  }) 
+  });
 
-  const [placing, setPlacing] = useState(false) 
+  const [placing, setPlacing] = useState(false);
 
   async function handlePlaceOrder(e) {
-    e.preventDefault() 
+    e.preventDefault();
 
     if (items.length === 0) {
-      return toast.error("Cart is empty") 
+      return toast.error("Cart is empty");
     }
 
     // ✅ Validate address
     if (!address.fullName || !address.phone || !address.address || !address.city) {
-      return toast.error("Fill all address fields") 
+      return toast.error("Fill all address fields");
     }
 
-    setPlacing(true) 
+    setPlacing(true);
 
     try {
       // ✅ Prepare order items
@@ -37,37 +37,37 @@ export default function Checkout() {
         product: i.product?._id,
         quantity: i.quantity,
         price: i.product?.price,
-      })) 
+      }));
 
       // ✅ Calculate total
       const calculatedTotal = items.reduce(
         (sum, item) => sum + item.product.price * item.quantity,
         0
-      ) 
+      );
 
       // 🔍 Debug (optional)
       console.log("ORDER DATA:", {
         items: orderItems,
         totalPrice: calculatedTotal,
         shippingAddress: address,
-      }) 
+      });
 
       // ✅ FIX: send "items" instead of "orderItems"
       const res = await api.post("/orders", {
         items: orderItems, // 🔥 IMPORTANT FIX
         totalPrice: calculatedTotal,
         shippingAddress: address,
-      }) 
+      });
 
-      clearCart() 
-      toast.success("Order placed!") 
-      navigate("/orders/" + res.data.order._id) 
+      clearCart();
+      toast.success("Order placed!");
+      navigate("/orders/" + res.data.order._id);
 
     } catch (err) {
-      console.error("ORDER ERROR:", err.response?.data) 
-      toast.error(err.response?.data?.message || "Order failed") 
+      console.error("ORDER ERROR:", err.response?.data);
+      toast.error(err.response?.data?.message || "Order failed");
     } finally {
-      setPlacing(false) 
+      setPlacing(false);
     }
   }
 
@@ -167,5 +167,5 @@ export default function Checkout() {
         </button>
       </form>
     </div>
-  ) 
+  );
 }

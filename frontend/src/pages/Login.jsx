@@ -1,28 +1,28 @@
-import { useState } from "react" 
-import { Link, useNavigate } from "react-router-dom" 
-import { useAuth } from "../context/AuthContext" 
-import toast from "react-hot-toast" 
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
 export default function Login() {
-  const [email, setEmail] = useState("") 
-  const [password, setPassword] = useState("") 
-  const [submitting, setSubmitting] = useState(false) 
-  const { login } = useAuth() 
-  const navigate = useNavigate() 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
-    e.preventDefault() 
-    setSubmitting(true) 
+    e.preventDefault();
+    setSubmitting(true);
     try {
-      const user = await login(email, password) 
-      toast.success("Logged in") 
-      if (user.role === "admin") navigate("/admin") 
-      else if (user.role === "seller") navigate("/seller/products") 
-      else navigate("/") 
+      const user = await login(email, password);
+      toast.success("Logged in");
+      if (user.role === "admin") navigate("/admin");
+      else if (user.role === "seller") navigate("/seller/products");
+      else navigate("/");
     } catch (err) {
-      toast.error(err.response?.data?.message || "Login failed") 
+      toast.error(err.response?.data?.message || "Login failed");
     } finally {
-      setSubmitting(false) 
+      setSubmitting(false);
     }
   }
 
@@ -58,5 +58,5 @@ export default function Login() {
         No account? <Link to="/register" className="underline">Register</Link>
       </p>
     </div>
-  ) 
+  );
 }

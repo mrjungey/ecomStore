@@ -1,27 +1,27 @@
-import { useEffect, useState } from "react" 
-import api from "../../services/api" 
-import { Trash2 } from "lucide-react" 
-import toast from "react-hot-toast" 
+import { useEffect, useState } from "react";
+import api from "../../services/api";
+import { Trash2 } from "lucide-react";
+import toast from "react-hot-toast";
 
 export default function AdminProducts() {
-  const [products, setProducts] = useState([]) 
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetchProducts() 
-  }, []) 
+    fetchProducts();
+  }, []);
 
   function fetchProducts() {
-    api.get("/products?limit=100").then((res) => setProducts(res.data.products)).catch(() => {}) 
+    api.get("/products?limit=100").then((res) => setProducts(res.data.products)).catch(() => {});
   }
 
   async function handleDelete(id) {
-    if (!confirm("Delete this product?")) return 
+    if (!confirm("Delete this product?")) return;
     try {
-      await api.delete("/products/" + id) 
-      toast.success("Deleted") 
-      fetchProducts() 
+      await api.delete("/products/" + id);
+      toast.success("Deleted");
+      fetchProducts();
     } catch {
-      toast.error("Failed") 
+      toast.error("Failed");
     }
   }
 
@@ -45,5 +45,5 @@ export default function AdminProducts() {
         </div>
       )}
     </div>
-  ) 
+  );
 }

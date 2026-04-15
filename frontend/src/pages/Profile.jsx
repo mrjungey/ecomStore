@@ -1,23 +1,23 @@
-import { useState } from "react" 
-import { useAuth } from "../context/AuthContext" 
-import api from "../services/api" 
-import toast from "react-hot-toast" 
+import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import api from "../services/api";
+import toast from "react-hot-toast";
 
 export default function Profile() {
-  const { user } = useAuth() 
-  const [form, setForm] = useState({ name: user?.name || "", phone: "", address: "" }) 
-  const [saving, setSaving] = useState(false) 
+  const { user } = useAuth();
+  const [form, setForm] = useState({ name: user?.name || "", phone: "", address: "" });
+  const [saving, setSaving] = useState(false);
 
   async function handleSubmit(e) {
-    e.preventDefault() 
-    setSaving(true) 
+    e.preventDefault();
+    setSaving(true);
     try {
-      await api.put("/auth/profile", form) 
-      toast.success("Profile updated") 
+      await api.put("/auth/profile", form);
+      toast.success("Profile updated");
     } catch (err) {
-      toast.error("Update failed") 
+      toast.error("Update failed");
     } finally {
-      setSaving(false) 
+      setSaving(false);
     }
   }
 
@@ -34,5 +34,5 @@ export default function Profile() {
         </button>
       </form>
     </div>
-  ) 
+  );
 }

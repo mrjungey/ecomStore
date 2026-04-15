@@ -1,48 +1,48 @@
-import { useEffect, useState } from "react" 
-import { useSearchParams } from "react-router-dom" 
-import api from "../services/api" 
-import ProductCard from "../components/ProductCard" 
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import api from "../services/api";
+import ProductCard from "../components/ProductCard";
 
 export default function ProductList() {
-  const [searchParams, setSearchParams] = useSearchParams() 
-  const [products, setProducts] = useState([]) 
-  const [categories, setCategories] = useState([]) 
-  const [total, setTotal] = useState(0) 
-  const [loading, setLoading] = useState(true) 
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  const page = parseInt(searchParams.get("page") || "1") 
-  const category = searchParams.get("category") || "" 
-  const search = searchParams.get("search") || "" 
-  const sort = searchParams.get("sort") || "" 
-
-  useEffect(() => {
-    api.get("/categories").then((res) => setCategories(res.data.categories)).catch(() => {}) 
-  }, []) 
+  const page = parseInt(searchParams.get("page") || "1");
+  const category = searchParams.get("category") || "";
+  const search = searchParams.get("search") || "";
+  const sort = searchParams.get("sort") || "";
 
   useEffect(() => {
-    setLoading(true) 
-    const params = new URLSearchParams() 
-    params.set("page", page) 
-    params.set("limit", "12") 
-    if (category) params.set("category", category) 
-    if (search) params.set("search", search) 
-    if (sort) params.set("sort", sort) 
+    api.get("/categories").then((res) => setCategories(res.data.categories)).catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    const params = new URLSearchParams();
+    params.set("page", page);
+    params.set("limit", "12");
+    if (category) params.set("category", category);
+    if (search) params.set("search", search);
+    if (sort) params.set("sort", sort);
 
     api.get("/products?" + params.toString())
       .then((res) => {
-        setProducts(res.data.products) 
-        setTotal(res.data.pages) 
+        setProducts(res.data.products);
+        setTotal(res.data.pages);
       })
       .catch(() => {})
-      .finally(() => setLoading(false)) 
-  }, [page, category, search, sort]) 
+      .finally(() => setLoading(false));
+  }, [page, category, search, sort]);
 
   function updateParam(key, value) {
-    const params = new URLSearchParams(searchParams) 
-    if (value) params.set(key, value) 
-    else params.delete(key) 
-    params.set("page", "1") 
-    setSearchParams(params) 
+    const params = new URLSearchParams(searchParams);
+    if (value) params.set(key, value);
+    else params.delete(key);
+    params.set("page", "1");
+    setSearchParams(params);
   }
 
   return (
@@ -54,7 +54,7 @@ export default function ProductList() {
           type="text"
           placeholder="Search..."
           defaultValue={search}
-          onKeyDown={(e) => { if (e.key === "Enter") updateParam("search", e.target.value)  }}
+          onKeyDown={(e) => { if (e.key === "Enter") updateParam("search", e.target.value); }}
           className="border rounded px-3 py-1.5 text-sm w-48"
         />
         <select
@@ -95,9 +95,9 @@ export default function ProductList() {
                 <button
                   key={i}
                   onClick={() => {
-                    const params = new URLSearchParams(searchParams) 
-                    params.set("page", i + 1) 
-                    setSearchParams(params) 
+                    const params = new URLSearchParams(searchParams);
+                    params.set("page", i + 1);
+                    setSearchParams(params);
                   }}
                   className={"px-3 py-1 rounded text-sm " + (page === i + 1 ? "bg-gray-900 text-white" : "border")}
                 >
@@ -109,5 +109,5 @@ export default function ProductList() {
         </>
       )}
     </div>
-  ) 
+  );
 }

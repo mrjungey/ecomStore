@@ -1,6 +1,6 @@
-import { Check } from "lucide-react" 
+import { Check } from "lucide-react";
 
-const steps = ["pending", "confirmed", "processing", "shipped", "delivered"] 
+const steps = ["pending", "confirmed", "processing", "shipped", "delivered"];
 
 export default function OrderStatusTracker({ currentStatus, history }) {
   if (currentStatus === "cancelled") {
@@ -8,16 +8,16 @@ export default function OrderStatusTracker({ currentStatus, history }) {
       <div className="border border-red-200 bg-red-50 rounded p-3 text-sm text-red-700">
         This order has been cancelled.
       </div>
-    ) 
+    );
   }
 
-  const currentIdx = steps.indexOf(currentStatus) 
+  const currentIdx = steps.indexOf(currentStatus);
 
   return (
     <div className="flex items-center gap-0 overflow-x-auto py-2">
       {steps.map((step, i) => {
-        const done = i <= currentIdx 
-        const historyEntry = history?.find((h) => h.status === step) 
+        const done = i <= currentIdx;
+        const historyEntry = history?.find((h) => h.status === step);
 
         return (
           <div key={step} className="flex items-center">
@@ -45,8 +45,8 @@ export default function OrderStatusTracker({ currentStatus, history }) {
               />
             )}
           </div>
-        ) 
+        );
       })}
     </div>
-  ) 
+  );
 }

@@ -1,43 +1,43 @@
-import { useEffect, useState } from "react" 
-import { Link } from "react-router-dom" 
-import api from "../services/api" 
-import { useCart } from "../context/CartContext" 
-import { Trash2, ShoppingCart } from "lucide-react" 
-import toast from "react-hot-toast" 
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import api from "../services/api";
+import { useCart } from "../context/CartContext";
+import { Trash2, ShoppingCart } from "lucide-react";
+import toast from "react-hot-toast";
 
-const PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Crect width='64' height='64' fill='%23e5e7eb'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%239ca3af' font-size='10'%3ENo img%3C/text%3E%3C/svg%3E" 
+const PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Crect width='64' height='64' fill='%23e5e7eb'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%239ca3af' font-size='10'%3ENo img%3C/text%3E%3C/svg%3E";
 
 export default function Wishlist() {
-  const [items, setItems] = useState([]) 
-  const [loading, setLoading] = useState(true) 
-  const { addToCart } = useCart() 
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { addToCart } = useCart();
 
   useEffect(() => {
-    fetchWishlist() 
-  }, []) 
+    fetchWishlist();
+  }, []);
 
   function fetchWishlist() {
     api
       .get("/wishlist")
       .then((res) => {
-        const valid = (res.data.items || []).filter((i) => i && i.product) 
-        setItems(valid) 
+        const valid = (res.data.items || []).filter((i) => i && i.product);
+        setItems(valid);
       })
       .catch(() => {})
-      .finally(() => setLoading(false)) 
+      .finally(() => setLoading(false));
   }
 
   async function handleRemove(productId) {
     try {
-      await api.delete("/wishlist/" + productId) 
-      setItems((prev) => prev.filter((i) => i.product && i.product._id !== productId)) 
-      toast.success("Removed") 
+      await api.delete("/wishlist/" + productId);
+      setItems((prev) => prev.filter((i) => i.product && i.product._id !== productId));
+      toast.success("Removed");
     } catch {
-      toast.error("Failed") 
+      toast.error("Failed");
     }
   }
 
-  if (loading) return <p className="text-sm text-gray-400">Loading...</p> 
+  if (loading) return <p className="text-sm text-gray-400">Loading...</p>;
 
   return (
     <div>
@@ -63,8 +63,8 @@ export default function Wishlist() {
               </div>
               <button
                 onClick={() => {
-                  addToCart(item.product) 
-                  toast.success("Added to cart") 
+                  addToCart(item.product);
+                  toast.success("Added to cart");
                 }}
                 className="p-2 border rounded hover:bg-gray-50"
                 title="Add to cart"
@@ -79,5 +79,5 @@ export default function Wishlist() {
         </div>
       )}
     </div>
-  ) 
+  );
 }

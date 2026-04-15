@@ -1,21 +1,21 @@
-import { useEffect, useState } from "react" 
-import api from "../../services/api" 
+import { useEffect, useState } from "react";
+import api from "../../services/api";
 
 export default function AdminDashboard() {
-  const [stats, setStats] = useState(null) 
+  const [stats, setStats] = useState(null);
 
   useEffect(() => {
-    api.get("/admin/stats").then((res) => setStats(res.data)).catch(() => {}) 
-  }, []) 
+    api.get("/admin/stats").then((res) => setStats(res.data)).catch(() => {});
+  }, []);
 
-  if (!stats) return <p className="text-sm text-gray-400">Loading...</p> 
+  if (!stats) return <p className="text-sm text-gray-400">Loading...</p>;
 
   const cards = [
     { label: "Users", value: stats.totalUsers },
     { label: "Products", value: stats.totalProducts },
     { label: "Orders", value: stats.totalOrders },
     { label: "Revenue", value: "Rs. " + stats.totalRevenue },
-  ] 
+  ];
 
   return (
     <div>
@@ -29,5 +29,5 @@ export default function AdminDashboard() {
         ))}
       </div>
     </div>
-  ) 
+  );
 }

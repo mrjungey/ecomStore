@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react" 
-import api from "../../services/api" 
+import { useEffect, useState } from "react";
+import api from "../../services/api";
 
 export default function AdminUsers() {
-  const [users, setUsers] = useState([]) 
-  const [loading, setLoading] = useState(true) 
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get("/admin/users").then((res) => setUsers(res.data.users)).catch(() => {}).finally(() => setLoading(false)) 
-  }, []) 
+    api.get("/admin/users").then((res) => setUsers(res.data.users)).catch(() => {}).finally(() => setLoading(false));
+  }, []);
 
-  if (loading) return <p className="text-sm text-gray-400">Loading...</p> 
+  if (loading) return <p className="text-sm text-gray-400">Loading...</p>;
 
   return (
     <div>
@@ -37,5 +37,5 @@ export default function AdminUsers() {
         </table>
       </div>
     </div>
-  ) 
+  );
 }
