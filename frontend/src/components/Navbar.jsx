@@ -52,6 +52,7 @@ export default function Navbar() {
               <Link to="/admin/products" className="hover:text-gray-600">Products</Link>
               <Link to="/admin/orders" className="hover:text-gray-600">Orders</Link>
               <Link to="/admin/users" className="hover:text-gray-600">Users</Link>
+              <Link to="/admin/categories" className="hover:text-gray-600">Categories</Link>
             </>
           )}
         </div>
